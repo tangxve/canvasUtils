@@ -1,4 +1,4 @@
-import DummyClass from "../src/canvas-posters"
+import DummyClass from "../src"
 
 /**
  * Dummy test
