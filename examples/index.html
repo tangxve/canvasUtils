@@ -4,15 +4,15 @@
   <meta charset='utf-8'>
   <title>canvas-posters examples</title>
   <script src='../dist/canvas-posters.umd.js'></script>
+  <style>
+    canvas {
+      display: block;
+      margin: 10px auto 0px;
+      border: 1px solid orange;
+    }
+  </style>
 </head>
-<body style='padding: 0 20px'>
-<h1>examples</h1>
+<body>
+<canvas id='myCanvass' width='600' height='500'></canvas>
 </body>
-<script>
-  // import { add } from '../dist/canvas-posters.es5'
-  // console.log(add(1, 2))
-  // console.log(reduce(2, 1))
-  console.log('add', postersCanvas.add(1, 2))
-  console.log('reduce', postersCanvas.reduce(1, 2))
-</script>
 </html>
