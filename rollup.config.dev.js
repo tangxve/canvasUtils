@@ -6,6 +6,8 @@ import typescript from 'rollup-plugin-typescript2'
 import json from '@rollup/plugin-json'
 import livereload from 'rollup-plugin-livereload'
 import serve from 'rollup-plugin-serve'
+import babel from 'rollup-plugin-babel'
+import path from 'path'
 
 const pkg = require('./package.json')
 
@@ -33,6 +35,14 @@ export default {
     resolve(),
     sourceMaps(),
     livereload(),
+    typescript({
+      tsconfig: path.resolve(__dirname, './tsconfig.json'),
+      extensions: ['.js', '.ts']
+    }),
+    babel({
+      runtimeHelpers: true,
+      exclude: 'node_modules/**'
+    }),
     serve({
       open: true,
       port: 1111,
