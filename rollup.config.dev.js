@@ -7,11 +7,12 @@ import json from '@rollup/plugin-json'
 import livereload from 'rollup-plugin-livereload'
 import serve from 'rollup-plugin-serve'
 import babel from 'rollup-plugin-babel'
+import del from 'rollup-plugin-delete'
 import path from 'path'
 
 const pkg = require('./package.json')
 
-const libraryName = 'PostersCanvas'
+const libraryName = 'canvasUtils'
 
 console.log('pkg', pkg)
 
@@ -19,8 +20,9 @@ export default {
   input: 'src/index.ts',
   output: [
     {
-      file: pkg.main,
-      name: camelCase(libraryName),
+      file: pkg.jsdelivr,
+      // name: camelCase(libraryName),
+      name: 'canvasUtils',
       format: 'umd', sourcemap: true
     },
     { file: pkg.module, format: 'es', sourcemap: true }
@@ -43,12 +45,17 @@ export default {
       runtimeHelpers: true,
       exclude: 'node_modules/**'
     }),
+    del({
+      targets: ['dist/*', 'build/*'],
+      verbose: true,
+      hook: 'buildEnd'
+
+    }),
     serve({
-      open: true,
+      // open: true,
       port: 1111,
       contentBase: './',
       openPage: '/examples/index.html'
-    }),
-    typescript({ useTsconfigDeclarationDir: true })
+    })
   ]
 }
