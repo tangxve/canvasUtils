@@ -6,9 +6,11 @@ export const getDPR = (): number => {
 }
 
 // 绘制画布
-export const initCanvasContext = ({ canvas }: InitOption): CanvasRenderingContext2D => {
+export const initCanvasContext = (option: InitOption): CanvasRenderingContext2D => {
+  const { canvas } = option
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
+  // 高清绘制
   const dpr = getDPR()
   const oldWidth = canvas.width
   const oldHeight = canvas.height
