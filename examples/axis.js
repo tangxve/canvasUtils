@@ -6,15 +6,7 @@ const ctx = canvasUtils.initCanvasContext({ canvas })
 const wd = canvas.clientWidth
 const ht = canvas.clientHeight
 const pad = 20
-const bottmPad = 50
+const bottomPad = 50
 const step = 80
 
-
-canvasUtils.drawAxis({
-  wd,
-  ht,
-  pad,
-  bottmPad,
-  step,
-  ctx
-})
+canvasUtils.drawAxis({ wd, ht, pad, bottomPad, step, ctx })
