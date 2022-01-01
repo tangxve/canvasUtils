@@ -1,4 +1,4 @@
-import { CanvasBase, DrawAxisFn, InitOption } from '../types'
+import { CanvasBase, DrawAxisFn, DrawAxisOpt, InitOption } from '../types'
 
 // 获取设备 dpr
 export const getDPR = (): number => {
@@ -43,8 +43,8 @@ export const drawLine = ({ ctx }: CanvasBase): void => {
 }
 
 // 绘制坐标系
-export const drawAxis: DrawAxisFn = (options) => {
-  const { ctx, pad, wd, bottomPad, ht, step } = options!
+export const drawAxis = (options: DrawAxisOpt) => {
+  const { ctx, pad, wd, bottomPad, ht, step } = options
   // 绘制坐标系
   ctx.beginPath()
   ctx.lineWidth = 2
@@ -58,7 +58,7 @@ export const drawAxis: DrawAxisFn = (options) => {
   ctx.closePath()
 
 
-// 绘制 X 轴方向刻度
+  // 绘制 X 轴方向刻度
   ctx.beginPath()
   ctx.lineWidth = 1
   ctx.strokeStyle = '#666'
@@ -70,7 +70,7 @@ export const drawAxis: DrawAxisFn = (options) => {
   ctx.closePath()
 
 
-// 绘制 Y 轴方向刻度
+  // 绘制 Y 轴方向刻度
   ctx.beginPath()
   ctx.lineWidth = 1
   ctx.strokeStyle = '#666'
@@ -80,6 +80,4 @@ export const drawAxis: DrawAxisFn = (options) => {
   }
   ctx.stroke()
   ctx.closePath()
-
-
 }
