@@ -7,11 +7,11 @@ export const getDPR = (): number => {
 
 // 绘制画布
 export const initCanvasContext = (option: InitOption): CanvasRenderingContext2D => {
-  const { canvas } = option
+  const { canvas, ratio } = option
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
   // 高清绘制
-  const dpr = getDPR()
+  const dpr = ratio || getDPR()
   const oldWidth = canvas.width
   const oldHeight = canvas.height
 
@@ -26,6 +26,7 @@ export const initCanvasContext = (option: InitOption): CanvasRenderingContext2D 
 
   return ctx
 }
+
 // 绘制直线
 export const drawLine = ({ ctx }: CanvasBase): void => {
   // 开始
@@ -83,3 +84,60 @@ export const drawAxis = (options: DrawAxisOpt) => {
   ctx.stroke()
   ctx.closePath()
 }
+
+// 绘制矩形 - 填充 (rect + fill)
+export const drawRectForFill = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number
+) => {
+  ctx.beginPath()
+  ctx.fillStyle = '#ccc'
+  ctx.rect(x, y, w, h)
+  ctx.fill()
+  ctx.closePath()
+}
+// export const drawRectForFill = (options: CanvasBase) => {
+//   const { ctx, x, y, w, h } = options
+//   ctx.beginPath()
+//   ctx.fillStyle = '#ccc'
+//   ctx.rect(x, y, w, h)
+//   ctx.fill()
+//   ctx.closePath()
+// }
+
+
+// 绘制矩形 - 边框 (rect + stroke)
+export const drawRectForStroke = (options: CanvasBase) => {
+  const { ctx } = options
+  ctx.beginPath()
+  ctx.strokeStyle = '#666'
+  ctx.rect(150, 50, 50, 50)
+  ctx.stroke()
+  ctx.closePath()
+}
+
+// 绘制矩形 - 填充的 fillRect()
+export const drawfillRect = (options: CanvasBase) => {
+  const { ctx } = options
+  ctx.beginPath()
+  ctx.fillStyle = 'skyblue'
+  ctx.fillRect(250, 50, 50, 50)
+  ctx.closePath()
+}
+
+// 绘制矩形 - 边框 strokeRect()
+export const drawStrokeRect = (options: CanvasBase) => {
+  const { ctx } = options
+  ctx.beginPath()
+  ctx.lineWidth = 4
+  ctx.strokeStyle = 'seagreen'
+  ctx.strokeRect(350, 50, 50, 50)
+  ctx.closePath()
+}
+
+
+
+
