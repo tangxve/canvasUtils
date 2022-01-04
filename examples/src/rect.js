@@ -13,7 +13,7 @@ const step = 80
 canvasUtils.drawAxis({ wd, ht, pad, bottomPad, step, ctx })
 
 canvasUtils.drawRectForFill(ctx, 50, 50, 50, 50)
-// canvasUtils.drawRectForFill({ ctx })
+// canvasUtils.drawRectForFill({ ctx, x: 50, y: 50 })
 canvasUtils.drawRectForStroke({ ctx })
 canvasUtils.drawfillRect({ ctx })
 canvasUtils.drawStrokeRect({ ctx })

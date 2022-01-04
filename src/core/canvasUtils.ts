@@ -1,12 +1,12 @@
 import { CanvasBase, DrawAxisFn, DrawAxisOpt, InitOption } from '../types'
 
 // 获取设备 dpr
-export const getDPR = (): number => {
+export const getDPR = function(): number {
   return window.devicePixelRatio || 1
 }
 
 // 绘制画布
-export const initCanvasContext = (option: InitOption): CanvasRenderingContext2D => {
+export const initCanvasContext = function(option: InitOption): CanvasRenderingContext2D {
   const { canvas, ratio } = option
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
@@ -28,7 +28,7 @@ export const initCanvasContext = (option: InitOption): CanvasRenderingContext2D 
 }
 
 // 绘制直线
-export const drawLine = ({ ctx }: CanvasBase): void => {
+export const drawLine = function({ ctx }: CanvasBase): void {
   // 开始
   ctx.beginPath()
   ctx.lineWidth = 5
@@ -46,7 +46,7 @@ export const drawLine = ({ ctx }: CanvasBase): void => {
 }
 
 // 绘制坐标系
-export const drawAxis = (options: DrawAxisOpt) => {
+export const drawAxis = function(options: DrawAxisOpt) {
   const { ctx, pad, wd, bottomPad, ht, step } = options
   // 绘制坐标系
   ctx.beginPath()
@@ -85,14 +85,22 @@ export const drawAxis = (options: DrawAxisOpt) => {
   ctx.closePath()
 }
 
-// 绘制矩形 - 填充 (rect + fill)
-export const drawRectForFill = (
+type DrawRectForFillFn = (
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
   w: number,
   h: number
-) => {
+) => void
+
+// 绘制矩形 - 填充 (rect + fill)
+export const drawRectForFill = function(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number
+) {
   ctx.beginPath()
   ctx.fillStyle = '#ccc'
   ctx.rect(x, y, w, h)
@@ -103,7 +111,7 @@ export const drawRectForFill = (
 //   const { ctx, x, y, w, h } = options
 //   ctx.beginPath()
 //   ctx.fillStyle = '#ccc'
-//   ctx.rect(x, y, w, h)
+//   ctx.rect(x!, y!, w!, h!)
 //   ctx.fill()
 //   ctx.closePath()
 // }
@@ -120,7 +128,7 @@ export const drawRectForStroke = (options: CanvasBase) => {
 }
 
 // 绘制矩形 - 填充的 fillRect()
-export const drawfillRect = (options: CanvasBase) => {
+export const drawfillRect = function(options: CanvasBase) {
   const { ctx } = options
   ctx.beginPath()
   ctx.fillStyle = 'skyblue'
@@ -129,7 +137,7 @@ export const drawfillRect = (options: CanvasBase) => {
 }
 
 // 绘制矩形 - 边框 strokeRect()
-export const drawStrokeRect = (options: CanvasBase) => {
+export const drawStrokeRect = function(options: CanvasBase) {
   const { ctx } = options
   ctx.beginPath()
   ctx.lineWidth = 4
