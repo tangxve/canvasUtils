@@ -1,9 +1,10 @@
-import { CanvasBase, DrawAxisFn, DrawAxisOpt, InitOption } from '../types'
+import { CanvasBase, DrawAxisFn, DrawAxisOpt, InitConfig, InitOption } from '../types'
 
 // 获取设备 dpr
 export const getDPR = function(): number {
   return window.devicePixelRatio || 1
 }
+
 
 // 绘制画布
 export const initCanvasContext = function(option: InitOption): CanvasRenderingContext2D {
@@ -85,40 +86,39 @@ export const drawAxis = function(options: DrawAxisOpt) {
   ctx.closePath()
 }
 
-type DrawRectForFillFn = (
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  w: number,
-  h: number
-) => void
-
-// 绘制矩形 - 填充 (rect + fill)
-export const drawRectForFill = function(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  w: number,
-  h: number
-) {
-  ctx.beginPath()
-  ctx.fillStyle = '#ccc'
-  ctx.rect(x, y, w, h)
-  ctx.fill()
-  ctx.closePath()
-}
-// export const drawRectForFill = (options: CanvasBase) => {
-//   const { ctx, x, y, w, h } = options
+// type DrawRectForFillFn = (
+//   ctx: CanvasRenderingContext2D,
+//   x: number,
+//   y: number,
+//   w: number,
+//   h: number
+// ) => void
+//
+// // 绘制矩形 - 填充 (rect + fill)
+// export const drawRectForFill: DrawRectForFillFn = function(
+//   ctx,
+//   ...args
+// ) {
+//   args.map(c => console.log(c))
 //   ctx.beginPath()
 //   ctx.fillStyle = '#ccc'
-//   ctx.rect(x!, y!, w!, h!)
+//   ctx.rect.apply(ctx, args as any)
 //   ctx.fill()
 //   ctx.closePath()
 // }
 
+export const drawRectForFill = function(options: CanvasBase) {
+  const { ctx, x, y, w, h } = options
+  ctx.beginPath()
+  ctx.fillStyle = '#ccc'
+  ctx.rect(x!, y!, w!, h!)
+  ctx.fill()
+  ctx.closePath()
+}
+
 
 // 绘制矩形 - 边框 (rect + stroke)
-export const drawRectForStroke = (options: CanvasBase) => {
+export const drawRectForStroke = function(options: CanvasBase) {
   const { ctx } = options
   ctx.beginPath()
   ctx.strokeStyle = '#666'
@@ -144,6 +144,23 @@ export const drawStrokeRect = function(options: CanvasBase) {
   ctx.strokeStyle = 'seagreen'
   ctx.strokeRect(350, 50, 50, 50)
   ctx.closePath()
+}
+
+export class CanvasUtils {
+  ctx: CanvasRenderingContext2D | undefined
+
+  constructor(initConfig: InitOption) {
+    this.ctx = initCanvasContext(initConfig)
+    // @ts-ignore
+    // return this.ctx
+  }
+
+  drawRectForFill(options: any) {
+    // @ts-ignore
+    const _options: any = { ctx: this.ctx, ...options }
+    drawRectForFill(_options)
+  }
+
 }
 
 
