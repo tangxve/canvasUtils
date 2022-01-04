@@ -2,10 +2,12 @@ export interface CanvasBase {
   ctx: CanvasRenderingContext2D,
   width?: string,
   height?: string,
-  x?: number,
-  y?: number,
-  w?: number,
-  h?: number
+  x?: number | null,
+  y?: number | null,
+  w?: number | null,
+  h?: number | null
+
+  [propName: string]: any
 }
 
 
