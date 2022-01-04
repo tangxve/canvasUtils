@@ -146,23 +146,6 @@ export const drawStrokeRect = function(options: CanvasBase) {
   ctx.closePath()
 }
 
-export class CanvasUtils {
-  ctx: CanvasRenderingContext2D | undefined
-
-  constructor(initConfig: InitOption) {
-    this.ctx = initCanvasContext(initConfig)
-    // @ts-ignore
-    // return this.ctx
-  }
-
-  drawRectForFill(options: any) {
-    // @ts-ignore
-    const _options: any = { ctx: this.ctx, ...options }
-    drawRectForFill(_options)
-  }
-
-}
-
 
 
 
