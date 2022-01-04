@@ -1,3 +1,7 @@
-// import canvasUtils from './canvasUtils'
+import instance from './instance'
 
-export * from './core/canvasUtils'
+export * as utils from './core/canvasUtils'
+
+export const createInstance = instance
+
+export default instance

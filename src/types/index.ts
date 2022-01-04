@@ -1,3 +1,9 @@
+export interface InitConfig {
+  ctx?: CanvasRenderingContext2D,
+  width?: string,
+  height?: string,
+}
+
 export interface CanvasBase {
   ctx: CanvasRenderingContext2D,
   width?: string,
