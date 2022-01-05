@@ -129,11 +129,9 @@ export const drawRectForStroke = function(options: CanvasBase) {
 
 // 绘制矩形 - 填充的 fillRect()
 export const drawfillRect = function(options: CanvasBase) {
-  const { ctx } = options
-  ctx.beginPath()
-  ctx.fillStyle = 'skyblue'
-  ctx.fillRect(250, 50, 50, 50)
-  ctx.closePath()
+  const { ctx, x, y, w, h, fillStyle } = options
+  ctx.fillStyle = fillStyle
+  ctx.fillRect(x!, y!, w!, h!)
 }
 
 // 绘制矩形 - 边框 strokeRect()
