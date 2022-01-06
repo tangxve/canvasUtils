@@ -14,13 +14,12 @@ export class CanvasUtils {
 Object.keys(utils).forEach((k) => {
   CanvasUtils.prototype[k] = function(options: any) {
     const _options: any = { ctx: this.ctx, ...options }
-    utils[k](_options)
+    return utils[k](_options)
   }
 })
 
 function createInstance(config: InitOption): any {
   const context = new CanvasUtils(config)
-
   return context
 }
 

@@ -5,6 +5,12 @@ export const getDPR = function(): number {
   return window.devicePixelRatio || 1
 }
 
+// 获取 16进制颜色
+export function color16(): string {
+  // 随机 * 最大的16进制数(0xFFFFFF) 然后在转成16进制
+  return `#${parseInt(String(Math.random() * 0xFFFFFF), 10).toString(16)}`
+}
+
 
 // 绘制画布
 export const initCanvasContext = function(option: InitOption): CanvasRenderingContext2D {
@@ -67,8 +73,8 @@ export const drawAxis = function(options: DrawAxisOpt) {
   ctx.lineWidth = 1
   ctx.strokeStyle = '#666'
   for (let i = 1; i < Math.floor(wd / step); i++) {
-    ctx.moveTo(pad + i * step, ht - bottomPad)
-    ctx.lineTo(pad + i * step, ht - bottomPad - 10)
+    ctx.moveTo(pad + i * step, ht - bottomPad + 1)
+    ctx.lineTo(pad + i * step, ht - bottomPad + 10)
   }
   ctx.stroke()
   ctx.closePath()
