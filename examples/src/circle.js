@@ -13,31 +13,61 @@ const step = 80
 cUtil.drawAxis({ wd, ht, pad, bottomPad, step })
 
 // 绘制圆环
-ctx.beginPath()
-ctx.lineWidth = 2
-ctx.strokeStyle = 'orange'
-/**
- * x: 圆弧中心（圆心）的 x 轴坐标。
- * y: 圆弧中心（圆心）的 y 轴坐标。
- * radius: 圆弧的半径。
- * startAngle: 绘制起始的角度， x轴方向开始计算，单位以弧度表示。
- * endAngle: ， 绘制到的角度，不是绘制多少角度
- * anticlockwise: 可选的Boolean值 ，如果为 true，逆时针绘制圆弧，反之，顺时针绘制。
- */
-// 如果绘制线，会从 绘制起始的角度开始
-ctx.moveTo(200, 200)
-ctx.arc(200, 200, 50, 0, Math.PI * 2, true)
-ctx.stroke()
-ctx.closePath()
+cUtil.drawStrokeCircle({
+  lineWidth: 1,
+  color: 'red',
+  x: 100, y: 100,
+  radius: 50,
+  startAngle: 0,
+  endAngle: Math.PI * 2
+})
+
+cUtil.drawStrokeCircle({
+  lineWidth: 1,
+  color: 'red',
+  x: 200, y: 100,
+  radius: 50,
+  startAngle: 0,
+  endAngle: Math.PI
+})
 
 // 绘制圆形
-ctx.beginPath()
-ctx.lineWidth = 2
-ctx.fillStyle = 'orange'
-ctx.moveTo(300, 300)
-ctx.arc(300, 300, 50, 0, Math.PI / 2)
-ctx.fill()
-ctx.closePath()
+cUtil.drawFillCircle({
+  lineWidth: 1,
+  color: cUtil.color16(),
+  x: 300, y: 100,
+  radius: 50, startAngle: 0,
+  endAngle: Math.PI * 2
+})
+
+
+// 绘制扇形
+cUtil.drawFillCircle({
+  lineWidth: 1,
+  color: cUtil.color16(),
+  x: 500, y: 100,
+  radius: 60,
+  startAngle: 0,
+  endAngle: Math.PI * 0.5
+})
+
+cUtil.drawFillCircle({
+  lineWidth: 1,
+  color: cUtil.color16(),
+  x: 500, y: 100,
+  radius: 80,
+  startAngle: Math.PI * 0.5,
+  endAngle: Math.PI * 1
+})
+
+cUtil.drawFillCircle({
+  lineWidth: 1,
+  color: cUtil.color16(),
+  x: 500, y: 100,
+  radius: 90,
+  startAngle: Math.PI * 1,
+  endAngle: Math.PI * 1.5
+})
 
 
 
