@@ -1,4 +1,4 @@
-import { CanvasBase, DrawAxisFn, DrawAxisOpt, InitConfig, InitOption } from '../types'
+import { CanvasBase, CircleOption, DrawAxisFn, DrawAxisOpt, InitConfig, InitOption } from '../types'
 
 // 获取设备 dpr
 export const getDPR = function(): number {
@@ -13,7 +13,7 @@ export function color16(): string {
 
 
 // 绘制画布
-export const initCanvasContext = function(option: InitOption): CanvasRenderingContext2D {
+export function initCanvasContext(option: InitOption): CanvasRenderingContext2D {
   const { canvas, ratio } = option
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
@@ -35,7 +35,7 @@ export const initCanvasContext = function(option: InitOption): CanvasRenderingCo
 }
 
 // 绘制直线
-export const drawLine = function({ ctx }: CanvasBase): void {
+export function drawLine({ ctx }: CanvasBase): void {
   // 开始
   ctx.beginPath()
   ctx.lineWidth = 5
@@ -53,7 +53,7 @@ export const drawLine = function({ ctx }: CanvasBase): void {
 }
 
 // 绘制坐标系
-export const drawAxis = function(options: DrawAxisOpt) {
+export function drawAxis(options: DrawAxisOpt) {
   const { ctx, pad, wd, bottomPad, ht, step } = options
   // 绘制坐标系
   ctx.beginPath()
@@ -92,28 +92,8 @@ export const drawAxis = function(options: DrawAxisOpt) {
   ctx.closePath()
 }
 
-// type DrawRectForFillFn = (
-//   ctx: CanvasRenderingContext2D,
-//   x: number,
-//   y: number,
-//   w: number,
-//   h: number
-// ) => void
-//
-// // 绘制矩形 - 填充 (rect + fill)
-// export const drawRectForFill: DrawRectForFillFn = function(
-//   ctx,
-//   ...args
-// ) {
-//   args.map(c => console.log(c))
-//   ctx.beginPath()
-//   ctx.fillStyle = '#ccc'
-//   ctx.rect.apply(ctx, args as any)
-//   ctx.fill()
-//   ctx.closePath()
-// }
 
-export const drawRectForFill = function(options: CanvasBase) {
+export function drawRectForFill(options: CanvasBase) {
   const { ctx, x, y, w, h } = options
   ctx.beginPath()
   ctx.fillStyle = '#ccc'
@@ -124,7 +104,7 @@ export const drawRectForFill = function(options: CanvasBase) {
 
 
 // 绘制矩形 - 边框 (rect + stroke)
-export const drawRectForStroke = function(options: CanvasBase) {
+export function drawRectForStroke(options: CanvasBase) {
   const { ctx } = options
   ctx.beginPath()
   ctx.strokeStyle = '#666'
@@ -134,19 +114,61 @@ export const drawRectForStroke = function(options: CanvasBase) {
 }
 
 // 绘制矩形 - 填充的 fillRect()
-export const drawfillRect = function(options: CanvasBase) {
+export function drawfillRect(options: CanvasBase) {
   const { ctx, x, y, w, h, fillStyle } = options
   ctx.fillStyle = fillStyle
   ctx.fillRect(x!, y!, w!, h!)
 }
 
 // 绘制矩形 - 边框 strokeRect()
-export const drawStrokeRect = function(options: CanvasBase) {
+export function drawStrokeRect(options: CanvasBase) {
   const { ctx } = options
   ctx.beginPath()
   ctx.lineWidth = 4
   ctx.strokeStyle = 'seagreen'
   ctx.strokeRect(350, 50, 50, 50)
+  ctx.closePath()
+}
+
+// 绘制圆环
+export function drawStrokeCircle(options: CircleOption) {
+  console.log('drawStrokeCircle', options)
+  const {
+    ctx, lineWidth, color, x, y,
+    radius, startAngle, endAngle
+  } = options
+
+  ctx.beginPath()
+  ctx.lineWidth = lineWidth!
+  ctx.strokeStyle = color!
+  /**
+   * x: 圆弧中心（圆心）的 x 轴坐标。
+   * y: 圆弧中心（圆心）的 y 轴坐标。
+   * radius: 圆弧的半径。
+   * startAngle: 绘制起始的角度， x轴方向开始计算，单位以弧度表示。
+   * endAngle: ， 绘制到的角度，不是绘制多少角度
+   * anticlockwise: 可选的Boolean值 ，如果为 true，逆时针绘制圆弧，反之，顺时针绘制。
+   */
+  // 如果绘制线，会从 绘制起始的角度开始
+  // ctx.moveTo(x!, y!)
+  // ctx.lineTo(100, 100)
+  ctx.arc(x!, y!, radius, startAngle, endAngle)
+  ctx.stroke()
+  ctx.closePath()
+}
+
+// 绘制实心圆
+export function drawFillCircle(options: any) {
+  const {
+    ctx, lineWidth, color, x, y,
+    radius, startAngle, endAngle
+  } = options
+
+  ctx.beginPath()
+  ctx.fillStyle = color
+  ctx.moveTo(x, y)
+  ctx.arc(x, y, radius, startAngle, endAngle)
+  ctx.fill()
   ctx.closePath()
 }
 

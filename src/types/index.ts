@@ -1,3 +1,5 @@
+import { finished } from 'stream'
+
 export interface InitConfig {
   ctx?: CanvasRenderingContext2D,
   width?: string,
@@ -11,7 +13,9 @@ export interface CanvasBase {
   x?: number | null,
   y?: number | null,
   w?: number | null,
-  h?: number | null
+  h?: number | null,
+  lineWidth?: number | null,
+  color?: string
 
   [propName: string]: any
 }
@@ -37,4 +41,10 @@ export interface DrawAxisOpt {
 
 export interface DrawAxisFn {
   (options: DrawAxisOpt): void
+}
+
+export interface CircleOption extends CanvasBase {
+  radius: number,
+  startAngle: number,
+  endAngle: number
 }
