@@ -53,8 +53,9 @@ export function drawLine({ ctx }: CanvasBase): void {
 }
 
 // 绘制坐标系
-export function drawAxis(options: DrawAxisOpt) {
-  const { ctx, pad, wd, bottomPad, ht, step } = options
+export function drawAxis(this: any, options: DrawAxisOpt) {
+  const { pad, wd, bottomPad, ht, step } = options
+  let ctx = this.ctx || options.ctx
   // 绘制坐标系
   ctx.beginPath()
   ctx.lineWidth = 2
@@ -172,6 +173,22 @@ export function drawFillCircle(options: any) {
   ctx.closePath()
 }
 
+
+export function setShadow(
+  this: any,
+  offsetX: number,
+  offsetY: number,
+  blur: number,
+  color: string,
+  ctx: CanvasRenderingContext2D
+): void {
+  console.log('this', this)
+  ctx = this.ctx || ctx
+  ctx.shadowOffsetX = offsetX
+  ctx.shadowOffsetY = offsetY
+  ctx.shadowBlur = blur
+  ctx.shadowColor = color
+}
 
 
 
