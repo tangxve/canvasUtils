@@ -1,4 +1,4 @@
-import { CanvasBase, CircleOption, DrawAxisFn, DrawAxisOpt, InitConfig, InitOption } from '../types'
+import { CanvasBase, CircleOption, DrawAxisFn, DrawAxisOpt, FontStyle, InitConfig, InitOption } from '../types'
 
 // 获取设备 dpr
 export const getDPR = function(): number {
@@ -19,6 +19,7 @@ export function initCanvasContext(option: InitOption): CanvasRenderingContext2D 
 
   // 高清绘制
   const dpr = ratio || getDPR()
+  console.log('dpr', dpr)
   const oldWidth = canvas.width
   const oldHeight = canvas.height
 
@@ -35,19 +36,18 @@ export function initCanvasContext(option: InitOption): CanvasRenderingContext2D 
 }
 
 // 绘制直线
-export function drawLine({ ctx }: CanvasBase): void {
+export function drawLine(this: any, options: CanvasBase): void {
+  let { ctx = this.ctx, lineWidth = 1, color, moveTo, lineTo } = options
+
   // 开始
   ctx.beginPath()
-  ctx.lineWidth = 5
-  ctx.strokeStyle = 'red'
-
+  ctx.lineWidth = lineWidth!
+  ctx.strokeStyle = color!
   // 起点 中间点 重点
-  ctx.moveTo(100, 100)
-  ctx.lineTo(200, 200)
-  ctx.lineTo(300, 100)
+  ctx.moveTo.apply(ctx, moveTo!)
+  ctx.lineTo.apply(ctx, lineTo!)
   // stroke() 方法会实际地绘制出通过 moveTo() 和 lineTo() 方法定义的路径。默认颜色是黑色。
   ctx.stroke()
-
   // 结束
   ctx.closePath()
 }
@@ -159,12 +159,13 @@ export function drawStrokeCircle(options: CircleOption) {
 }
 
 // 绘制实心圆
-export function drawFillCircle(options: any) {
+export function drawFillCircle(this: any, options: any) {
   const {
-    ctx, lineWidth, color, x, y,
+    lineWidth, color, x, y,
     radius, startAngle, endAngle
   } = options
 
+  let ctx = this.ctx || options.ctx
   ctx.beginPath()
   ctx.fillStyle = color
   ctx.moveTo(x, y)
@@ -190,5 +191,35 @@ export function setShadow(
   ctx.shadowColor = color
 }
 
+
+export function drawText(this: any,
+  text: string,
+  x: number, y: number,
+  font: string,
+  color: string
+) {
+  let ctx = this.ctx
+  ctx.fillStyle = color
+  // font 的属性 https://developer.mozilla.org/zh-CN/docs/Web/CSS/font
+
+  ctx.font = font
+  ctx.fillText(text, x, y)
+}
+
+/**
+ * font 参数格式
+ * [font-style] [font-variant] [font-weight]（可选的）
+ * [font-size/line-height] [font-family]（必须的）
+ * https://developer.mozilla.org/zh-CN/docs/Web/CSS/font
+ */
+
+export function transformFontStyle(options: FontStyle): string {
+  const { font, fontStyle, fontVariant, fontWeight, fontSize, lineHeight, fontFamily } = options
+
+  if (font) return font
+
+
+  return `${fontStyle} ${fontVariant} ${fontWeight} ${fontSize}/${lineHeight} ${fontFamily}`
+}
 
 

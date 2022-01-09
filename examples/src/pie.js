@@ -13,7 +13,7 @@ const step = 80
 // 绘制坐标系
 cUtil.drawAxis({ wd, ht, pad, bottomPad, step })
 
-ctx.beginPath() 
+ctx.beginPath()
 cUtil.setShadow(4, 4, 4, '#333')
 ctx.fillStyle = '#5c1918'
 ctx.moveTo(400, 300)
