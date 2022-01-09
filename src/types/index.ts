@@ -6,6 +6,8 @@ export interface InitConfig {
   height?: string,
 }
 
+type  MoveTo = [x: number, y: number]
+
 export interface CanvasBase {
   ctx: CanvasRenderingContext2D,
   width?: string,
@@ -14,6 +16,9 @@ export interface CanvasBase {
   y?: number | null,
   w?: number | null,
   h?: number | null,
+  moveTo?: MoveTo,
+  lineTo?: MoveTo,
+
   lineWidth?: number | null,
   color?: string
 
@@ -47,4 +52,28 @@ export interface CircleOption extends CanvasBase {
   radius: number,
   startAngle: number,
   endAngle: number
+}
+
+export interface FontStyle {
+  fontSize: string;
+  fontFamily: string;
+  font?: string;
+  fontFeatureSettings?: string;
+  fontKerning?: string;
+  fontOpticalSizing?: string;
+  fontSizeAdjust?: string;
+  fontStretch?: string;
+  fontStyle?: string;
+  fontSynthesis?: string;
+  fontVariant?: string;
+  fontWeight?: string;
+  lineHeight?: string;
+  // /** @deprecated */
+  // fontVariantAlternates: string;
+  // fontVariantCaps: string;
+  // fontVariantEastAsian: string;
+  // fontVariantLigatures: string;
+  // fontVariantNumeric: string;
+  // fontVariantPosition: string;
+  // fontVariationSettings: string;
 }
