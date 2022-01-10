@@ -1,4 +1,14 @@
-import { CanvasBase, CircleOption, DrawAxisFn, DrawAxisOpt, FontStyle, InitConfig, InitOption } from '../types'
+import {
+  CanvasBase,
+  CircleOption,
+  DrawAxisFn,
+  DrawAxisOpt,
+  DrawTextOption,
+  FontStyle,
+  InitConfig,
+  InitOption
+} from '../types'
+import { transformFontStyle } from './utils'
 
 // 获取设备 dpr
 export const getDPR = function(): number {
@@ -192,34 +202,61 @@ export function setShadow(
 }
 
 
-export function drawText(this: any,
-  text: string,
-  x: number, y: number,
-  font: string,
-  color: string
-) {
-  let ctx = this.ctx
-  ctx.fillStyle = color
-  // font 的属性 https://developer.mozilla.org/zh-CN/docs/Web/CSS/font
+export function drawText(this: any, options: DrawTextOption) {
 
+  let { text, x, y, maxWidth, color, font, textAlign, textBaseline, ...fontStyle } = options
+
+  font = transformFontStyle({ font, ...fontStyle })
+
+  let ctx = this.ctx
+
+  ctx.fillStyle = color
+  ctx.textAlign = textAlign
+  ctx.textBaseline = textBaseline
+  // font 的属性 https://developer.mozilla.org/zh-CN/docs/Web/CSS/font
   ctx.font = font
   ctx.fillText(text, x, y)
 }
 
-/**
- * font 参数格式
- * [font-style] [font-variant] [font-weight]（可选的）
- * [font-size/line-height] [font-family]（必须的）
- * https://developer.mozilla.org/zh-CN/docs/Web/CSS/font
- */
+// 绘制多行文字
+// 参考大佬的 https://www.zhangxinxu.com/wordpress/2018/02/canvas-text-break-line-letter-spacing-vertical/
+export function drawWrapText(this: any, options: DrawTextOption) {
+  let { text, x, y, maxWidth, lineHeight, font } = options
+  let ctx = this.ctx
 
-export function transformFontStyle(options: FontStyle): string {
-  const { font, fontStyle, fontVariant, fontWeight, fontSize, lineHeight, fontFamily } = options
+  if (maxWidth === undefined) {
+    maxWidth = ctx?.width || 300
+  }
 
-  if (font) return font
+  // 获取计算后的行高
+  if (lineHeight === undefined) {
+    lineHeight = this.lineHeight
+  }
+  else {
+    lineHeight = parseInt(lineHeight as string, 10)
+  }
+  
+  const arrText = text.split('')
+  let line = ''
 
+  for (let n = 0; n < arrText.length; n++) {
+    let testLine = line + arrText[n]
+    const measure = ctx.measureText(testLine)
+    const testWidth = measure.width
 
-  return `${fontStyle} ${fontVariant} ${fontWeight} ${fontSize}/${lineHeight} ${fontFamily}`
+    console.log('testWidth', testWidth)
+
+    if (testWidth > maxWidth! && n > 0) {
+      ctx.fillText(line, x, y)
+      line = arrText[n]
+      y! += (lineHeight as number)
+    }
+    else {
+      line = testLine
+    }
+  }
+
+  ctx.fillText(line, x, y)
 }
 
 

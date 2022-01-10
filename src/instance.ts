@@ -1,11 +1,21 @@
 import * as utils from './core/canvasUtils'
 import { InitConfig, InitOption } from './types'
 
+function getLineHeight(ele: Element): number {
+  const lineHeight = (window.getComputedStyle(ele).lineHeight) ||
+    (window.getComputedStyle(document.body).lineHeight)
+
+  return parseInt(lineHeight, 10)
+}
+
 export class CanvasUtils {
   ctx: CanvasRenderingContext2D | undefined
+  lineHeight: number
 
   constructor(initConfig: InitOption) {
     this.ctx = utils.initCanvasContext(initConfig)
+    const { canvas } = this.ctx
+    this.lineHeight = getLineHeight(canvas)
     // @ts-ignore
     // return this.ctx
   }

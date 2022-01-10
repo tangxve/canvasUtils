@@ -1,5 +1,3 @@
-import { finished } from 'stream'
-
 export interface InitConfig {
   ctx?: CanvasRenderingContext2D,
   width?: string,
@@ -57,7 +55,7 @@ export interface CircleOption extends CanvasBase {
 export interface FontStyle {
   fontSize: string;
   fontFamily: string;
-  font?: string;
+  font: string;
   fontFeatureSettings?: string;
   fontKerning?: string;
   fontOpticalSizing?: string;
@@ -67,7 +65,7 @@ export interface FontStyle {
   fontSynthesis?: string;
   fontVariant?: string;
   fontWeight?: string;
-  lineHeight?: string;
+  lineHeight?: string | number;
   // /** @deprecated */
   // fontVariantAlternates: string;
   // fontVariantCaps: string;
@@ -76,4 +74,8 @@ export interface FontStyle {
   // fontVariantNumeric: string;
   // fontVariantPosition: string;
   // fontVariationSettings: string;
+}
+
+export interface DrawTextOption extends CanvasBase, FontStyle, CanvasTextDrawingStyles {
+  maxWidth?: number,
 }
