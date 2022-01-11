@@ -6,21 +6,9 @@ import {
   DrawTextOption,
   FontStyle,
   InitConfig,
-  InitOption
+  InitOption, RectRadiusOption
 } from '../types'
-import { transformFontStyle } from './utils'
-
-// 获取设备 dpr
-export const getDPR = function(): number {
-  return window.devicePixelRatio || 1
-}
-
-// 获取 16进制颜色
-export function color16(): string {
-  // 随机 * 最大的16进制数(0xFFFFFF) 然后在转成16进制
-  return `#${parseInt(String(Math.random() * 0xFFFFFF), 10).toString(16)}`
-}
-
+import { transformFontStyle, getDPR } from './utils'
 
 // 绘制画布
 export function initCanvasContext(option: InitOption): CanvasRenderingContext2D {
@@ -29,7 +17,6 @@ export function initCanvasContext(option: InitOption): CanvasRenderingContext2D 
 
   // 高清绘制
   const dpr = ratio || getDPR()
-  console.log('dpr', dpr)
   const oldWidth = canvas.width
   const oldHeight = canvas.height
 
@@ -142,12 +129,12 @@ export function drawStrokeRect(options: CanvasBase) {
 }
 
 // 绘制圆环
-export function drawStrokeCircle(options: CircleOption) {
-  console.log('drawStrokeCircle', options)
+export function drawStrokeCircle(this: any, options: CircleOption) {
   const {
-    ctx, lineWidth, color, x, y,
+    lineWidth, color, x, y,
     radius, startAngle, endAngle
   } = options
+  let ctx = this.ctx || options.ctx
 
   ctx.beginPath()
   ctx.lineWidth = lineWidth!
@@ -193,7 +180,6 @@ export function setShadow(
   color: string,
   ctx: CanvasRenderingContext2D
 ): void {
-  console.log('this', this)
   ctx = this.ctx || ctx
   ctx.shadowOffsetX = offsetX
   ctx.shadowOffsetY = offsetY
@@ -202,6 +188,7 @@ export function setShadow(
 }
 
 
+// 绘制文字
 export function drawText(this: any, options: DrawTextOption) {
 
   let { text, x, y, maxWidth, color, font, textAlign, textBaseline, ...fontStyle } = options
@@ -235,7 +222,7 @@ export function drawWrapText(this: any, options: DrawTextOption) {
   else {
     lineHeight = parseInt(lineHeight as string, 10)
   }
-  
+
   const arrText = text.split('')
   let line = ''
 
@@ -243,8 +230,6 @@ export function drawWrapText(this: any, options: DrawTextOption) {
     let testLine = line + arrText[n]
     const measure = ctx.measureText(testLine)
     const testWidth = measure.width
-
-    console.log('testWidth', testWidth)
 
     if (testWidth > maxWidth! && n > 0) {
       ctx.fillText(line, x, y)
@@ -257,6 +242,65 @@ export function drawWrapText(this: any, options: DrawTextOption) {
   }
 
   ctx.fillText(line, x, y)
+}
+
+// 绘制圆角矩形
+export function drawRectRadius(this: any, option: RectRadiusOption) {
+  console.log('drawRectRadius')
+  let ctx = this.ctx || option.ctx
+  let { x, y, width, height, radius } = option
+
+  const top = {
+    s: [x + radius, y],
+    e: [x + width - radius, y]
+  }
+  const right = {
+    s: [x + width, y + radius],
+    e: [x + width, y + height - radius]
+  }
+  const bottom = {
+    s: [x + width - radius, y + height],
+    e: [x + radius, y + height]
+  }
+  const left = {
+    s: [x, y + height - radius],
+    e: [x, y + radius]
+  }
+
+
+  ctx?.beginPath()
+  ctx.strokeStyle = 'red'
+  ctx.lineWidth = 4
+
+  ctx.moveTo(...top.s)
+  ctx.lineTo(...top.e)
+
+  ctx.arcTo(top.s[0] + radius, top.s[1] - radius, ...right.s, radius)
+
+  ctx.lineTo(...right.s)
+  ctx.lineTo(...right.e)
+
+  ctx.lineTo(...bottom.s)
+  ctx.lineTo(...bottom.e)
+
+  ctx.lineTo(...left.s)
+  ctx.lineTo(...left.e)
+
+
+  // ctx.moveTo(x + radius, y)
+  // ctx.lineTo(x + width - radius, y)
+  // ctx.arcTo(x + width, y, x + width, y + radius, radius) // top-right
+  //
+  // ctx.lineTo(x + width, y + height - radius)
+  // ctx.arcTo(x + width, y + height, x + width - radius, y + height, radius) // bottom-right
+  // ctx.lineTo(x + radius, y + height)
+  // ctx.arcTo(x, y + height, x, y + height - radius, radius) // bottom-left
+  // ctx.lineTo(x, y + radius)
+  // ctx.arcTo(x, y, x + radius, y, radius) // top-left
+
+  ctx.stroke()
+
+
 }
 
 

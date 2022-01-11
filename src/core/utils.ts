@@ -15,3 +15,14 @@ export function transformFontStyle(options: FontStyle): string {
 
   return `${fontStyle} ${fontVariant} ${fontWeight} ${fontSize}/${lineHeight} ${fontFamily}`
 }
+
+// 获取设备 dpr
+export const getDPR = function(): number {
+  return window.devicePixelRatio || 1
+}
+
+// 获取 16进制颜色
+export function color16(): string {
+  // 随机 * 最大的16进制数(0xFFFFFF) 然后在转成16进制
+  return `#${parseInt(String(Math.random() * 0xFFFFFF), 10).toString(16)}`
+}

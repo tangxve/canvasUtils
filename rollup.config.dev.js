@@ -53,7 +53,7 @@ export default {
     }),
     serve({
       // open: true,
-      port: 1111,
+      port: 1101,
       contentBase: './',
       openPage: '/examples/index.html'
     })

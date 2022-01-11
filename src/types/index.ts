@@ -1,3 +1,5 @@
+import { drawRectRadius } from '../core/canvasUtils'
+
 export interface InitConfig {
   ctx?: CanvasRenderingContext2D,
   width?: string,
@@ -10,10 +12,10 @@ export interface CanvasBase {
   ctx: CanvasRenderingContext2D,
   width?: string,
   height?: string,
-  x?: number | null,
-  y?: number | null,
-  w?: number | null,
-  h?: number | null,
+  x?: number,
+  y?: number,
+  w?: number,
+  h?: number,
   moveTo?: MoveTo,
   lineTo?: MoveTo,
 
@@ -78,4 +80,15 @@ export interface FontStyle {
 
 export interface DrawTextOption extends CanvasBase, FontStyle, CanvasTextDrawingStyles {
   maxWidth?: number,
+}
+
+
+export interface RectRadiusOption {
+  ctx?: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  radius: number,
+  color: string,
 }
