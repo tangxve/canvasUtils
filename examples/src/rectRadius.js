@@ -5,9 +5,19 @@ const { ctx } = cUtil
 
 
 cUtil.drawRectRadius({
-  x: 100,
-  y: 100,
+  x: 0,
+  y: 0,
   width: 250,
   height: 300,
-  radius: 20
+  radius: 20,
+  mode: 'img'
+})
+
+cUtil.drawRectRadius({
+  x: 300,
+  y: 0,
+  width: 250,
+  height: 300,
+  radius: 20,
+  mode: 'img'
 })
