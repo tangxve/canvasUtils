@@ -84,11 +84,13 @@ export interface DrawTextOption extends CanvasBase, FontStyle, CanvasTextDrawing
 
 
 export interface RectRadiusOption {
-  ctx?: CanvasRenderingContext2D,
+  ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
   width: number,
   height: number,
   radius: number,
   color: string,
+  lineWidth: number,
+  mode: 'contain' | 'fill' | 'img'
 }

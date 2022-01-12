@@ -195,7 +195,7 @@ export function drawText(this: any, options: DrawTextOption) {
 
   font = transformFontStyle({ font, ...fontStyle })
 
-  let ctx = this.ctx
+  let ctx = this.ctx || options.ctx
 
   ctx.fillStyle = color
   ctx.textAlign = textAlign
@@ -245,10 +245,42 @@ export function drawWrapText(this: any, options: DrawTextOption) {
 }
 
 // 绘制圆角矩形
-export function drawRectRadius(this: any, option: RectRadiusOption) {
-  console.log('drawRectRadius')
-  let ctx = this.ctx || option.ctx
-  let { x, y, width, height, radius } = option
+export function drawRectRadius(this: any, options: RectRadiusOption) {
+  let ctx = this.ctx || options.ctx
+  console.log('this', this)
+  const { x, y, width, height, lineWidth, mode } = options
+  ctx.lineWidth = lineWidth || 1
+
+  roundRect.call(this, options)
+
+  if (mode === 'contain') {
+    ctx.strokeStyle = 'red'
+    ctx.stroke()
+  }
+
+  if (mode === 'fill') {
+    ctx.fillStyle = 'red'
+    ctx.fill()
+  }
+
+  ctx.clip()
+  const img = new Image()
+
+  img.onload = function() {
+    console.log('img.width', img.width)
+    // ctx.drawImage(img, -(img.width / 2), -(img.height / 2))
+    ctx.drawImage(img, x, y, width, height)
+  }
+
+  img.src = 'https://img.zcool.cn/community/01764361de35d111013e8cd0fdb04b.jpg@3000w_1l_2o_100sh.jpg'
+
+  ctx.strokeStyle = 'red'
+  ctx.stroke()
+}
+
+function roundRect(this: any, options: RectRadiusOption) {
+  const { x, y, width, height, radius, lineWidth, mode } = options
+  let ctx = this.ctx || options.ctx
 
   const top = {
     s: [x + radius, y],
@@ -267,40 +299,30 @@ export function drawRectRadius(this: any, option: RectRadiusOption) {
     e: [x, y + radius]
   }
 
+  const arcToTopRight = [right.s[0], top.s[1], ...right.s, radius]
+  const arcToBottomRight = [right.s[0], bottom.s[1], ...bottom.s, radius]
+  const arcToBottomLeft = [left.s[0], bottom.s[1], ...left.s, radius]
+  const arcToTopLeft = [left.s[0], top.s[1], ...top.s, radius]
 
-  ctx?.beginPath()
-  ctx.strokeStyle = 'red'
-  ctx.lineWidth = 4
-
+  ctx.beginPath()
   ctx.moveTo(...top.s)
   ctx.lineTo(...top.e)
-
-  ctx.arcTo(top.s[0] + radius, top.s[1] - radius, ...right.s, radius)
+  ctx.arcTo(...arcToTopRight)
 
   ctx.lineTo(...right.s)
   ctx.lineTo(...right.e)
+  ctx.arcTo(...arcToBottomRight)
 
   ctx.lineTo(...bottom.s)
   ctx.lineTo(...bottom.e)
+  ctx.arcTo(...arcToBottomLeft)
 
   ctx.lineTo(...left.s)
   ctx.lineTo(...left.e)
+  ctx.arcTo(...arcToTopLeft)
+  ctx.closePath()
 
-
-  // ctx.moveTo(x + radius, y)
-  // ctx.lineTo(x + width - radius, y)
-  // ctx.arcTo(x + width, y, x + width, y + radius, radius) // top-right
-  //
-  // ctx.lineTo(x + width, y + height - radius)
-  // ctx.arcTo(x + width, y + height, x + width - radius, y + height, radius) // bottom-right
-  // ctx.lineTo(x + radius, y + height)
-  // ctx.arcTo(x, y + height, x, y + height - radius, radius) // bottom-left
-  // ctx.lineTo(x, y + radius)
-  // ctx.arcTo(x, y, x + radius, y, radius) // top-left
-
-  ctx.stroke()
-
-
+  return this
 }
 
 
