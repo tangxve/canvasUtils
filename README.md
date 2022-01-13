@@ -5,20 +5,35 @@
 常用的 canvas 方法
 
 ## 功能
+
 - 初始化画布 initCanvasContext
 - 绘制直线 drawLine
 - 绘制填充矩形 drawfillRect
 - 绘制矩形边框 drawStrokeRect
-- 绘制圆角矩形 
+- 绘制圆角矩形
 - 绘制圆环 drawStrokeCircle
 - 绘制圆形 drawFillCircle
 - 绘制文字 drawText
 - 绘制多行文字 drawWrapText
 
+### 初始化画布 initCanvasContext
+
+initCanvasContext(options<Object>)
+options属性：
+
+| 参数     | 说明       | 类型                | 可选值 | 默认值                          |
+|:-------|----------|-------------------|-----|------------------------------|
+| canvas | canvas元素 | HTMLCanvasElement | -   | -                            |
+| ratio  | 缩放比例     | number            | -   | `window.devicePixelRatio` 或1 |
+| width  | 宽        | number            | -   | -                            |
+| height | 高        | number            | -   | -                            |
+
+- 返回值：ctx
 
 ## 其他
 
 ### 高清绘制
+
 canvas 绘制不是矢量图，在高分辨率下要缩放处理
 
 根据 DPR 等比缩放
@@ -34,6 +49,7 @@ window.devicePixelRatio  // 2
 ```
 
 ```html
+
 <canvas id='myCanvass' width='1200' height='1000'
         style='width: 600px; height: 500px;'>
 </canvas>
