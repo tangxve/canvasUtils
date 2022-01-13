@@ -11,8 +11,9 @@ import {
 import { transformFontStyle, getDPR } from './utils'
 
 // 绘制画布
-export function initCanvasContext(option: InitOption): CanvasRenderingContext2D {
-  const { canvas, ratio } = option
+
+export function initCanvasContext(options: InitOption): CanvasRenderingContext2D {
+  const { canvas, ratio } = options
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
 
   // 高清绘制
@@ -247,12 +248,12 @@ export function drawWrapText(this: any, options: DrawTextOption) {
 // 绘制圆角矩形
 export function drawRectRadius(this: any, options: RectRadiusOption) {
   let ctx = this.ctx || options.ctx
-  console.log('this', this)
+
   const { x, y, width, height, lineWidth, mode } = options
+
   ctx.lineWidth = lineWidth || 1
 
   roundRect.call(this, options)
-
   if (mode === 'contain') {
     ctx.strokeStyle = 'red'
     ctx.stroke()
@@ -262,20 +263,6 @@ export function drawRectRadius(this: any, options: RectRadiusOption) {
     ctx.fillStyle = 'red'
     ctx.fill()
   }
-
-  ctx.clip()
-  const img = new Image()
-
-  img.onload = function() {
-    console.log('img.width', img.width)
-    // ctx.drawImage(img, -(img.width / 2), -(img.height / 2))
-    ctx.drawImage(img, x, y, width, height)
-  }
-
-  img.src = 'https://img.zcool.cn/community/01764361de35d111013e8cd0fdb04b.jpg@3000w_1l_2o_100sh.jpg'
-
-  ctx.strokeStyle = 'red'
-  ctx.stroke()
 }
 
 function roundRect(this: any, options: RectRadiusOption) {
