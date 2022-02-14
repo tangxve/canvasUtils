@@ -19,16 +19,12 @@
 ### 初始化画布 initCanvasContext
 
 initCanvasContext(options<Object>)
-options属性：
+- options属性：
+  - canvas: canvas 元素<HTMLCanvasElement>
+  - width： 宽度<number>
+  - height：高度<number>
+  - ratio：渲染比例<number>，如果不传默认获取 `window.devicePixelRatio`
 
-| 参数     | 说明       | 类型                | 可选值 | 默认值                          |
-|:-------|----------|-------------------|-----|------------------------------|
-| canvas | canvas元素 | HTMLCanvasElement | -   | -                            |
-| ratio  | 缩放比例     | number            | -   | `window.devicePixelRatio` 或1 |
-| width  | 宽        | number            | -   | -                            |
-| height | 高        | number            | -   | -                            |
-
-- 返回值：ctx
 
 ## 其他
 
