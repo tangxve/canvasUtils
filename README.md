@@ -20,10 +20,11 @@
 
 initCanvasContext(options<Object>)
 - options属性：
-  - canvas: canvas 元素<HTMLCanvasElement>
-  - width： 宽度<number>
-  - height：高度<number>
-  - ratio：渲染比例<number>，如果不传默认获取 `window.devicePixelRatio`
+  - canvas：`<HTMLCanvasElement>` canvas 元素
+  - width： `<number>` 宽度
+  - height：`<number>` 高度
+  - ratio：`<number>` 渲染比例，如果不传默认获取 `window.devicePixelRatio`
+- 返回值：`<CanvasRenderingContext2D>` canvas 实例
 
 
 ## 其他
