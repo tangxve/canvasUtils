@@ -16,6 +16,21 @@
 - 绘制文字 drawText
 - 绘制多行文字 drawWrapText
 
+## 使用
+
+下载依赖：
+```shell
+npm i
+```
+
+运行：
+```shell
+yarn start:dev
+```
+
+查看例子🌰：http://localhost:1101/examples/index.html#/
+
+
 ### 初始化画布 initCanvasContext
 
 initCanvasContext(options<Object>)
@@ -25,6 +40,7 @@ initCanvasContext(options<Object>)
   - height：`<number>` 高度
   - ratio：`<number>` 渲染比例，如果不传默认获取 `window.devicePixelRatio`
 - 返回值：`<CanvasRenderingContext2D>` canvas 实例
+
 
 
 ## 其他
