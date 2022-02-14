@@ -6,7 +6,7 @@
 
 ## 功能
 
-- 初始化画布 initCanvasContext [x]
+- 初始化画布 initCanvasContext
 - 绘制直线 drawLine
 - 绘制填充矩形 drawfillRect
 - 绘制矩形边框 drawStrokeRect
