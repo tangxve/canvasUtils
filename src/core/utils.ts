@@ -26,3 +26,19 @@ export function color16(): string {
   // 随机 * 最大的16进制数(0xFFFFFF) 然后在转成16进制
   return `#${parseInt(String(Math.random() * 0xFFFFFF), 10).toString(16)}`
 }
+
+// 加载图片
+export function imageLoad(src: string): Promise<HTMLImageElement | undefined> {
+  return new Promise((resolve, reject) => {
+    const imgEle = new Image()
+    // 解决 canvas toDataURL 导出图片跨域问题
+    imgEle.crossOrigin = 'anonymous'
+    imgEle.src = src
+    imgEle.onload = () => {
+      resolve(imgEle)
+    }
+    imgEle.onerror = () => {
+      reject(undefined)
+    }
+  })
+}
