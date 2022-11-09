@@ -38,7 +38,7 @@ export function imageLoad(src: string): Promise<HTMLImageElement | undefined> {
       resolve(imgEle)
     }
     imgEle.onerror = () => {
-      reject(undefined)
+      resolve(undefined)
     }
   })
 }
